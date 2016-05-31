@@ -3,8 +3,6 @@ Python-AdminLTE-Tornado-Mongoengine
 
 ***
 
----
 
-- - - -
 
 
