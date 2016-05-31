@@ -1,0 +1,7 @@
+<div class="container">
+    <h3>{% if resp['err'] %}<span style="color:red">请求失败</span>{% else %}<span>请求成功</span>{% end %}</h3>
+    {{ resp['sta'] }} {{ resp['msg'] }}
+    <br>
+    {% if resp['url'] %}继续，请<a href="{{ resp['url'] }}">点击这里跳转</a>。<br>{% end %}
+    如果无需其它操作，可以关闭当前窗口。
+</div>
