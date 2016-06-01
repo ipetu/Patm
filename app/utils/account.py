@@ -7,7 +7,7 @@ import random, hashlib
 import uuid
 
 
-class AccountUtil:
+class AccountUtils:
     @staticmethod
     def generate_randauid(strs='-_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', size=64):
         auid = ''
@@ -69,8 +69,8 @@ class AccountUtil:
 
     @staticmethod
     def chk_user_is_live(user):
-        return AccountUtil.chk_user_if_perm(user, 0x00000001)
+        return AccountUtils.chk_user_if_perm(user, 0x00000001)
 
     @staticmethod
     def chk_user_is_root(user):
-        return AccountUtil.chk_user_if_perm(user, 0x7FFFFFFF)
+        return AccountUtils.chk_user_if_perm(user, 0x7FFFFFFF)

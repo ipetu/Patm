@@ -9,7 +9,6 @@ import importlib
 import tornado
 
 from app.dispatcher import AccountModelDispatcher, AcountLogsModelDispatcher
-from app.utils.accountUtil import AccountUtil
 
 try:
     import urlparse  # py2
@@ -36,7 +35,7 @@ from lib.utils import Utils
 
 class BasicCtrl(tornado.web.RequestHandler):
     def initialize(self):
-        self._caches = {'model': {}, 'datum': {}}
+        self._caches = {'model': {}, 'datum': {},'utils':{}}
 
     def set_default_headers(self):
         self.set_header('server', self.settings['servs'])
@@ -62,7 +61,7 @@ class BasicCtrl(tornado.web.RequestHandler):
         auth = self.get_secure_cookie('_auth')
         if usid and auth:
             accountModel = AccountModelDispatcher.findWithAccountUserName(usid)
-            if accountModel and str(accountModel['userName']) == auid and AccountUtil.generate_authword(accountModel['userAtms'], accountModel['userSalt']) == auth:
+            if accountModel and str(accountModel['userName']) == auid and self.utils('account').generate_authword(accountModel['userAtms'], accountModel['userSalt']) == auth:
                 return accountModel
 
     def set_current_sess(self, accountModel, days = 30):
@@ -70,7 +69,7 @@ class BasicCtrl(tornado.web.RequestHandler):
                 expires_days=days)
         self.set_secure_cookie("_auid", str(accountModel['userName']),
                 expires_days=days, httponly = True)
-        self.set_secure_cookie("_auth", AccountUtil.generate_authword(accountModel['userAtms'], accountModel['userSalt']),
+        self.set_secure_cookie("_auth", self.utils('account').generate_authword(accountModel['userAtms'], accountModel['userSalt']),
                 expires_days=days, httponly = True)
 
     def del_current_sess(self):
@@ -108,8 +107,8 @@ class BasicCtrl(tornado.web.RequestHandler):
                 value = self.jsons(value)
                 return 'time' in value and 'code' in value\
                         and 0 < self.stime() - value['time'] < 60\
-                        and value['code'] == self.utils().str_md5_hex(\
-                        self.utils().str_md5_hex(self.settings['cookie_secret']) + input.lower() + str(value['time']))
+                        and value['code'] == self.util().str_md5_hex(\
+                        self.util().str_md5_hex(self.settings['cookie_secret']) + input.lower() + str(value['time']))
         return False
 
     def asset(self, name, host = '/', base = 'www', path = 'assets', vers = True):
@@ -135,7 +134,7 @@ class BasicCtrl(tornado.web.RequestHandler):
     def cache(self):
         return Cache
 
-    def utils(self):
+    def util(self):
         return Utils
 
     def timer(self):
@@ -230,6 +229,23 @@ class BasicCtrl(tornado.web.RequestHandler):
             self._caches[base][clsn] = getattr(sys.modules[modn], clsn)()
         return self._caches[base][clsn]
 
+    def utils(self, name):
+        """
+        返回对应的类  相当于java中的反射机制
+        :param name:
+        :return:
+        """
+        # base = sys._getframe().f_code.co_name
+        base = 'utils'
+        clsn = '_'.join([v.title() for v in name.split('.')]) + base.title()
+        if clsn not in self._caches[base]:
+            modn = 'app.' + base + '.' + name
+            if modn not in sys.modules:
+                # __import__(modn)
+                importlib.import_module(modn)
+            self._caches[base][clsn] = getattr(sys.modules[modn], clsn)()
+        return self._caches[base][clsn]
+
 def login(method):
     """Decorate methods with this to require that the user be logged in.
 
@@ -266,7 +282,7 @@ def alive(method):
     @login
     @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
-        if AccountUtil.chk_user_is_live(self.current_user):
+        if self.utils('account').chk_user_is_live(self.current_user):
             return method(self, *args, **kwargs)
         else:
             self.flash(0, {'sta': 403, 'url': self.get_login_url()})

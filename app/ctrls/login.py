@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from app.utils.accountUtil import AccountUtil
 from basic import BasicCtrl
 from app.dispatcher import (UserModelDispatcher,AccountModelDispatcher)
 
@@ -29,16 +28,13 @@ class LoginCtrl(BasicCtrl):
                 #     self.flash(0, {'msg': '操作太频繁，请稍后再试', 'sta': 429})
                 #     return
 
-                if accountModel and AccountUtil.generate_password(password, accountModel['userSalt']) == accountModel['userPassword']:
+                if accountModel and self.utils('account').generate_password(password, accountModel['userSalt']) == accountModel['userPassword']:
                     self.set_current_sess(accountModel, days=remember)
 
                     self.ualog(userModel, '登陆')
                     self.flash(1, {'url': redirect})
                     return
-            else:
-                self.flash(0, {'msg': '用户名或密码错误'})
-                return
         except Exception,e:
             print e
 
-        self.flash(0, {'msg': '用户名或密码错误'})
+        self.flash(0, {'msg': '用户名或密码错误','url':redirect})

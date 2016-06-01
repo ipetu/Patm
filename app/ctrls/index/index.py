@@ -3,8 +3,6 @@ from tornado.options import options
 
 from app.ctrls.basic import BasicCtrl
 from app.dispatcher import (AccountModelDispatcher, UserModelDispatcher)
-from app.utils.accountUtil import AccountUtil
-
 
 class Index_IndexCtrl(BasicCtrl):
     def get(self, *args):
@@ -15,8 +13,8 @@ class Index_IndexCtrl(BasicCtrl):
 
         # if True:
         for index in range(1):
-            userName = AccountUtil.generate_username();
-            passwrod = AccountUtil.generate_password('123456', 'asdflkjh')
+            userName = self.utils('account').generate_username();
+            passwrod = self.utils('account').generate_password('123456', 'asdflkjh')
             userNick = "admin"
             userAvatar = "http://qcloud.dpfile.com/pc/X7UcuoYuamFwCQTtNO6WTFf4jEat2raHUMPSaOT7TLGhLC5f0SSJr4dqexDFSz-STYGVDmosZWTLal1WbWRW3A.jpg"
             userSign = "就是这么屌啊"

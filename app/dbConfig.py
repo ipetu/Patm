@@ -12,7 +12,7 @@ sys.setdefaultencoding('utf-8')
 
 # mongo_conn_host="192.168.1.155:27017"
 # define("mongo_conn_host", mongo_conn_host)
-mongo_conn_host="192.168.1.104:27017"
+mongo_conn_host="192.168.1.39:27017"
 from mongoengine import connect
 dbconn = connect('douqu',host=mongo_conn_host)
 define("dbconn", dbconn)

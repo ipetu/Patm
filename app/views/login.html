@@ -78,8 +78,9 @@
                 respond: function (opts, resp) {
                     if (resp.err) {
                         alert('登录失败！' + resp.msg);
-                        L.widget.captcha.reload(opts.element.find('.captcha'));
-                        opts.element.find('button[type=submit]').prop('disabled', false);
+                        location.href = resp.url || '/';
+//                        L.widget.captcha.reload(opts.element.find('.captcha'));
+//                        opts.element.find('button[type=submit]').prop('disabled', false);
                     } else {
                         location.href = resp.url || '/';
                     }
