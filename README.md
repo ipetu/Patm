@@ -17,6 +17,7 @@ hope this technology will be Python developers can give some guidance Suggest. T
   * Manage logging
   * Display Data Management
 * Front-end development
+* Restful api development
 
 
 ##### Thanks
