@@ -9,11 +9,13 @@ from ctrls.admin.four import Admin_FourCtrl
 from ctrls.login import LoginCtrl
 from ctrls.admin.leave import LeaveCtrl
 from ctrls.index.index import Index_IndexCtrl
+from ctrls.admin.adminLeftMenu import Admin_AlogLoginCtrl
 url = [
     (r'/admin', Admin_IndexCtrl),
     (r'/second', Admin_SecondCtrl),
     (r'/three', Admin_ThreeCtrl),
     (r'/four', Admin_FourCtrl),
+    (r'/alogLogin', Admin_AlogLoginCtrl),
     (r'/login', LoginCtrl),
     (r'/leave', LeaveCtrl),
     (r'/index', Index_IndexCtrl),

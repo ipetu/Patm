@@ -1,0 +1,74 @@
+{% extends "_base.html" %}
+
+{% block title %}Dashboard{% end %}
+
+{% block body %}
+<section class="content-header">
+    <h1>
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+   <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <h3 class="box-title">Responsive Hover Table</h3>
+
+              <div class="box-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+              <table class="table table-hover">
+                <tr>
+                  <th>序号</th>
+                  <th>昵称</th>
+                  <th>IP地址</th>
+                  <th>登录日志</th>
+                  <th>登陆数据</th>
+                  <th>登陆时间</th>
+                </tr>
+                 <!--{% for index in range(len(accountLogs)) %}-->
+                <!--<tr>-->
+                  <!--<td>{{index+1}}</td>-->
+                  <!--<td>{{accountLogs[index].alogUser.userNick}}</td>-->
+                  <!--<td><span class="label label-success">{{accountLogs[index].alogUserIp}}</span></td>-->
+                  <!--<td>{{ accountLogs[index].alogText}}</td>-->
+                  <!--<td>{{ accountLogs[index].alogData}}</td>-->
+                  <!--<td>{{ accountLogs[index].alogCtms}}</td>-->
+                <!--</tr>-->
+                <!--{% end %}-->
+                    {% for index ,item in enumerate(accountLogs) %}
+                <tr>
+                  <td>{{index+1}}</td>
+                  <td>{{item.alogUser.userNick}}</td>
+                  <td><span class="label label-success">{{item.alogUserIp}}</span></td>
+                  <td>{{ item.alogText}}</td>
+                  <td>{{ item.alogData}}</td>
+                  <td>{{ item.alogCtms}}</td>
+                </tr>
+                {% end %}
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+       </div>
+</section>
+
+{% end body %}
+

@@ -125,3 +125,7 @@ class AcountLogsModelDispatcher(object):
         accountLog.alogUserIp = userIp
         accountLog.alogData = userData
         return accountLog.save()
+
+    @staticmethod
+    def findWithAllAccountLog():
+        return AcountLogsModel.objects
