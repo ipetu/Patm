@@ -72,11 +72,15 @@
         <!-- /.box-body -->
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">
-                <li><a href="">&laquo;</a></li>
+                {% if prev %}
+                <li><a href="/alogLogin?currentPage={{currentPager-1}}">&laquo;</a></li>
+                {% end %}
                 {% for index in range(pageCount) %}
-                 <li><a href="/alogLogin?currentPage={{index+1}}">{{index+1}}</a></li>
+                <li><a href="/alogLogin?currentPage={{index+1}}">{{index+1}}</a></li>
                 {%end %}
-                <li><a href="#">&raquo;</a></li>
+                {% if next %}
+                <li><a href="/alogLogin?currentPage={{currentPager+1}}">&raquo;</a></li>
+                {% end %}
             </ul>
         </div>
     </div>

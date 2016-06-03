@@ -127,5 +127,12 @@ class AcountLogsModelDispatcher(object):
         return accountLog.save()
 
     @staticmethod
-    def findWithAllAccountLog(limit=10):
-        return AcountLogsModel.objects.order_by('-alogCtms').limit(limit)
+    def findWithAccountLogPager(start=0, end=5, order='-alogCtms', limit=10):
+        size = end - start
+        prev = next = False
+        accountLogs = AcountLogsModel.objects.order_by(order)[start:end + 1]
+        if len(accountLogs) - size > 0:
+            next = True
+        if start != 0:
+            prev = True
+        return prev, next, accountLogs[start:end]
