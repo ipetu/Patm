@@ -21,6 +21,7 @@ hope this technology will be Python developers can give some guidance Suggest. T
 
 ##### Operation Record
 * commit alog login record 16/06/03
+* commit alog login list pager qurey 16/06/03
 
 ##### Thanks
 ***

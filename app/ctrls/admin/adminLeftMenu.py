@@ -8,10 +8,15 @@ from app.dispatcher import AcountLogsModelDispatcher
 class Admin_AlogLoginCtrl(AdminCtrl):
     @admin
     def get(self, *args):
-        accountLogs = AcountLogsModelDispatcher.findWithAllAccountLog()
-        # for index,i in accountLogs:
-        #     print index,i
-        # for index in range(len(accountLogs)):
-        #     print index
-        #     print accountLogs[index]
-        self.render('admin/alog_login.html',accountLogs = accountLogs)
+        limit = 5
+        arguments = self.request.arguments
+        if arguments is not None and len(arguments)>0:
+            self.write('hello')
+            pass
+        else:
+            accountLogs = AcountLogsModelDispatcher.findWithAllAccountLog(limit)
+            accountPage = accountLogs.count()
+            pageCount = accountPage / limit
+            self.render('admin/alog_login.html', accountLogs=accountLogs, accountPage=accountPage, pageCount=pageCount)
+
+

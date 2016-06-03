@@ -6,5 +6,6 @@ from . import admin, AdminCtrl
 class Admin_SecondCtrl(AdminCtrl):
     @admin
     def get(self, *args):
-        Alists = self.model('alist').getAll(10)
-        self.render('admin/second.html',Alist = Alists)
+        pass
+        # Alists = self.model('alist').getAll(10)
+        # self.render('admin/second.html',Alist = Alists)

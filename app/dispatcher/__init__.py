@@ -127,5 +127,5 @@ class AcountLogsModelDispatcher(object):
         return accountLog.save()
 
     @staticmethod
-    def findWithAllAccountLog():
-        return AcountLogsModel.objects
+    def findWithAllAccountLog(limit=10):
+        return AcountLogsModel.objects.order_by('-alogCtms').limit(limit)
