@@ -252,24 +252,39 @@ desired effect
             <ul class="sidebar-menu">
                 <li class="header">HEADER</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="{% if '/admin' == request.path %} active {% end %}">
-                    <a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a>
-                </li>
-                <li class="{% if '/second' == request.path %} active {% end %}"><a href="/second"><i
-                        class="fa fa-link"></i> <span>Another Link</span></a></li>
-                <li class="{% if '/alogLogin' == request.path %} active {% end %}"><a href="/alogLogin"><i
-                        class="fa fa-link"></i> <span>登录日志</span></a></li>
-                <li class="treeview {% if '/three' == request.path or '/four' == request.path %} active {% end %}">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu {% if '/three' == request.path or '/four' == request.path %} menu-open{% end %} ">
-                        <li class="{% if '/three' == request.path %}active{% end %}"><a href="/three"><i
-                                class="fa fa-circle-o"></i>Link in level 2</a></li>
-                        <li class="{% if '/four' == request.path %}active{% end %}"><a href="/four"><i
-                                class="fa fa-circle-o"></i>Link in level 2</a></li>
-                    </ul>
-                </li>
+                {% if request.path == '/admin'%}
+                    <li class="active"><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
+                {% else %}
+                    <li ><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
+                {% end %}
+                {% if request.path == '/second'%}
+                     <li class="active"><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                {% else %}
+                     <li ><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                {% end %}
+                {% if request.path == '/alogLogin'%}
+                    <li class="active"><a href="/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
+                {% else %}
+                    <li ><a href="/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
+                {% end %}
+                {% if request.path == '/setting'%}
+                    <li class="active"><a href="/setting"><i class="fa fa-link"></i> <span>系统设置</span></a></li>
+                {% else %}
+                    <li ><a href="/setting"><i class="fa fa-link"></i> <span>系统设置</span></a></li>
+                {% end %}
+                <!--{% if request.path == '/three' or request.path =='/four' %}-->
+                    <!--<li class="treeview active ">-->
+                        <!--<a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>-->
+                            <!--<i class="fa fa-angle-left pull-right"></i>-->
+                        <!--</a>-->
+                        <!--<ul class="treeview-menu {% if '/three' == request.path or '/four' == request.path %} menu-open{% end %} ">-->
+                            <!--<li class="{% if '/three' == request.path %}active{% end %}"><a href="/three"><i-->
+                                    <!--class="fa fa-circle-o"></i>Link in level 2</a></li>-->
+                            <!--<li class="{% if '/four' == request.path %}active{% end %}"><a href="/four"><i-->
+                                    <!--class="fa fa-circle-o"></i>Link in level 2</a></li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                <!--{% end %}-->
             </ul>
             <!-- /.sidebar-menu -->
         </section>

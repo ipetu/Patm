@@ -31,7 +31,7 @@ class LoginCtrl(BasicCtrl):
                 if accountModel and self.utils('account').generate_password(password, accountModel['userSalt']) == accountModel['userPassword']:
                     self.set_current_sess(accountModel, days=remember)
 
-                    self.ualog(userModel, '登陆')
+                    self.ualog(userModel, '后台登录')
                     self.flash(1, {'url': redirect})
                     return
         except Exception,e:

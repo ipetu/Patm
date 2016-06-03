@@ -63,7 +63,7 @@ class AcountLogsModel(Document):
     alogCtms = DateTimeField(default=datetime.datetime.now, required=True)
     meta = {
         'collection': 'AccountLogModel',
-        'indexes': [{'fields': ['alogUserName']}]
+        'indexes': [{'fields': ['alogCtms']}]
     }
 
 class PostsModel(Document):
