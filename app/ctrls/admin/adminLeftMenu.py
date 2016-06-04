@@ -2,11 +2,13 @@
 # -*- coding: UTF-8 -*-
 # Created by Liuwf on 16/6/2
 from app.ctrls.admin import AdminCtrl, admin
-from app.dispatcher import AcountLogsModelDispatcher
+from app.dispatcher import AcountLogsModelDispatcher,SystemSettingModelDispatcher
 
 """
 系统登录日志
 """
+
+
 class Admin_AlogLoginCtrl(AdminCtrl):
     @admin
     def get(self, *args):
@@ -24,15 +26,60 @@ class Admin_AlogLoginCtrl(AdminCtrl):
         prev, next, accountLogs = AcountLogsModelDispatcher.findWithAccountLogPager(start=start, end=end)
         accountPage = accountLogs.count()
         pageCount = accountPage / pageSize
-        if accountPage%pageSize>0:
-            pageCount = pageCount+1
+        if accountPage % pageSize > 0:
+            pageCount = pageCount + 1
         self.render('admin/alog_login.html', accountLogs=accountLogs, prev=prev, next=next, accountPage=accountPage,
-                    pageCount=pageCount,currentPager= int(currentPager))
+                    pageCount=pageCount, currentPager=int(currentPager))
 
-"""
-系统设置
-"""
+
 class Admin_SettingCtrl(AdminCtrl):
     @admin
     def get(self, *args):
-        self.render('admin/setting.html')
+        """
+        获取系统设置
+        :param args:
+        :return:
+        """
+        # SystemSettingModelDispatcher.saveSetting(settingName='descp',settingValue='descp')
+        # SystemSettingModelDispatcher.saveSetting(settingName='keyws',settingValue='keyws')
+        # SystemSettingModelDispatcher.saveSetting(settingName='title',settingValue='title')
+        # SystemSettingModelDispatcher.saveSetting(settingName='topic',settingValue='topic')
+        # SystemSettingModelDispatcher.saveSetting(settingName='brand',settingValue='brand')
+        # SystemSettingModelDispatcher.saveSetting(settingName='built',settingValue='built')
+        # SystemSettingModelDispatcher.saveSetting(settingName='power',settingValue='power')
+        pageSize = 5
+        currentPager = self.get_argument('currentPage', default=0, strip=True)
+        start = 0
+        if currentPager is not 0:
+            start = (int(currentPager) - 1) * pageSize
+        end = start + pageSize
+        prev, next, systemSettings = SystemSettingModelDispatcher.findWithSystemSettingPager(start=start, end=end)
+        accountPage = systemSettings.count()
+        pageCount = accountPage / pageSize
+        if accountPage % pageSize > 0:
+            pageCount = pageCount + 1
+        self.render('admin/setting.html', systemSettings=systemSettings, prev=prev, next=next, accountPage=accountPage,
+                    pageCount=pageCount, currentPager=int(currentPager))
+
+
+"""
+增加系统设置
+"""
+class Admin_SettingCreateCtrl(AdminCtrl):
+    @admin
+    def get(self, *args):
+        """
+        增加系统设置
+        :param args:
+        :return:
+        """
+        self.render('admin/setting_create.html')
+
+    @admin
+    def post(self, *args, **kwargs):
+        """
+            增加系统设置
+            :param args:
+            :return:
+            """
+        self.render('admin/setting_create.html')

@@ -253,40 +253,47 @@ desired effect
                 <li class="header">HEADER</li>
                 <!-- Optionally, you can add icons to the links -->
                 {% if request.path == '/admin'%}
-                    <li class="active"><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
+                <li class="active"><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
                 {% else %}
-                    <li ><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
+                <li><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
                 {% end %}
                 {% if request.path == '/second'%}
-                     <li class="active"><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                <li class="active"><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
                 {% else %}
-                     <li ><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+                <li><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
                 {% end %}
-                {% if request.path == '/alogLogin'%}
-                    <li class="active"><a href="/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
+                {% if request.path == '/admin/alogLogin'%}
+                <li class="active"><a href="/admin/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
                 {% else %}
-                    <li ><a href="/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
+                <li><a href="/admin/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
                 {% end %}
-                {% if request.path == '/setting'%}
-                    <li class="active"><a href="/setting"><i class="fa fa-link"></i> <span>系统设置</span></a></li>
+
+                {% if request.path == '/admin/setting' or request.path == '/admin/setting_create'%}
+                <li class="treeview active ">
                 {% else %}
-                    <li ><a href="/setting"><i class="fa fa-link"></i> <span>系统设置</span></a></li>
+                <li class="treeview ">
                 {% end %}
-                <!--{% if request.path == '/three' or request.path =='/four' %}-->
-                    <!--<li class="treeview active ">-->
-                        <!--<a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>-->
-                            <!--<i class="fa fa-angle-left pull-right"></i>-->
-                        <!--</a>-->
-                        <!--<ul class="treeview-menu {% if '/three' == request.path or '/four' == request.path %} menu-open{% end %} ">-->
-                            <!--<li class="{% if '/three' == request.path %}active{% end %}"><a href="/three"><i-->
-                                    <!--class="fa fa-circle-o"></i>Link in level 2</a></li>-->
-                            <!--<li class="{% if '/four' == request.path %}active{% end %}"><a href="/four"><i-->
-                                    <!--class="fa fa-circle-o"></i>Link in level 2</a></li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
-                <!--{% end %}-->
+                 <a href="#"><i class="fa fa-link"></i> <span>设置</span><i class="fa fa-angle-left pull-right"></i></a>
+                    {% if request.path == '/admin/setting' or request.path == '/admin/setting_create'%}
+                    <ul class="treeview-menu  menu-open ">
+                    {% else %}
+                    <ul class="treeview-menu ">
+                    {% end %}
+                    {% if request.path == '/admin/setting'%}
+                    <li class="active"><a href="/admin/setting"><i class="fa fa-circle-o"></i>系统设置</a></li>
+                    {% else %}
+                    <li class=""><a href="/admin/setting"><i class="fa fa-circle-o"></i>系统设置</a></li>
+                    {% end %}
+                    {% if request.path == '/setting_create'%}
+                    <li class="active"><a href="/admin/setting_create"><i class="fa fa-circle-o"></i>新建设置</a></li>
+                    {% else %}
+                    <li class=""><a href="/admin/setting_create"><i class="fa fa-circle-o"></i>新建设置</a></li>
+                    {% end %}
+                     </ul>
+                     </ul>
+                 </li>
             </ul>
-            <!-- /.sidebar-menu -->
+                    <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
     </aside>

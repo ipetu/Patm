@@ -59,7 +59,7 @@
                             <td><span class="label label-success">{{item.alogUserIp}}</span></td>
                             <td>{{ item.alogText}}</td>
                             <td>{{ item.alogData}}</td>
-                            <td>{{ item.alogCtms}}</td>
+                            <td>{{ item.alogCtms.strftime('%Y-%m-%d %H:%M:%S')}}</td>
                             <td><a href="#" color="white"><span class="label label-success">编辑</span></a></td>
                         </tr>
                         {% end %}
@@ -73,7 +73,7 @@
         <div class="box-footer clearfix">
             <ul class="pagination pagination-sm no-margin pull-right">
                 {% if prev %}
-                <li><a href="/alogLogin?currentPage={{currentPager-1}}">&laquo;</a></li>
+                <li><a href="/admin/alogLogin?currentPage={{currentPager-1}}">&laquo;</a></li>
                 {% end %}
                 {% for index in range(pageCount) %}
                     {% if currentPager == 0 and index ==0 %}
@@ -81,11 +81,11 @@
                     {% elif currentPager == index+1 %}
                     <li class="paginate_button active"><a href="javascript:void(0);">{{index+1}}</a></li>
                     {% else %}
-                    <li ><a href="/alogLogin?currentPage={{index+1}}">{{index+1}}</a></li>
+                    <li ><a href="/admin/alogLogin?currentPage={{index+1}}">{{index+1}}</a></li>
                     {% end %}
                 {%end %}
                 {% if next %}
-                <li><a href="/alogLogin?currentPage={{currentPager+1}}">&raquo;</a></li>
+                <li><a href="/admin/alogLogin?currentPage={{currentPager+1}}">&raquo;</a></li>
                 {% end %}
             </ul>
         </div>

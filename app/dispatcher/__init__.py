@@ -1,9 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Liuwf on 16/5/29
-from app.model.models import (AccountModel, UserModel, AcountLogsModel, PostsModel, VideoPostsModel)
+from app.model.models import (AccountModel, UserModel, AcountLogsModel, PostsModel, VideoPostsModel, SystemSettingModel)
 
-
+"""
+账号信息操作类
+"""
 class AccountModelDispatcher(object):
     @staticmethod
     def saveAccountInfo(userName, userSalt, userPassword, userMobile=''):
@@ -42,7 +44,9 @@ class AccountModelDispatcher(object):
         from bson import ObjectId
         return AccountModel.objects(id=ObjectId(id)).first()
 
-
+"""
+个人信息操作类
+"""
 class UserModelDispatcher(object):
     @staticmethod
     def saveUserInfo(userName, userNick, userAvatar, userSign='', userMail='', userMeta='', userStatus=1):
@@ -105,7 +109,9 @@ class UserModelDispatcher(object):
     def updateWithUserName(username):
         pass
 
-
+"""
+账号登录日志操作
+"""
 class AcountLogsModelDispatcher(object):
     @staticmethod
     def saveLog(username, user, text, userIp, userData=''):
@@ -136,3 +142,53 @@ class AcountLogsModelDispatcher(object):
         if start != 0:
             prev = True
         return prev, next, accountLogs[start:end]
+
+"""
+系统相关的设置操作
+"""
+class SystemSettingModelDispatcher(object):
+    @staticmethod
+    def saveSetting(settingName='', settingValue=''):
+        """
+        保存系统设置
+        :param settingName:
+        :param settingValue:
+        :return:
+        """
+        systemSetting = SystemSettingModel()
+        systemSetting.systemSettingName = settingName
+        systemSetting.systemSettingValue = settingValue
+        return systemSetting.save()
+
+    @staticmethod
+    def updateSetting(settingName='', settingValue=''):
+        """
+        更新系统设置
+        :param settingName:
+        :param settingValue:
+        :return:
+        """
+        setting = SystemSettingModel.objects(settingName=settingName).first()
+        if setting is not None:
+            setting.systemSettingValue = settingValue
+            return setting.save()
+        return False
+
+    @staticmethod
+    def findWithSystemSettingPager(start=0, end=5, order='-settingCtms', limit=10):
+        """
+        分页查找系统设置
+        :param start:
+        :param end:
+        :param order:
+        :param limit:
+        :return:
+        """
+        size = end - start
+        prev = next = False
+        systemSettings = SystemSettingModel.objects.order_by(order)[start:end + 1]
+        if len(systemSettings) - size > 0:
+            next = True
+        if start != 0:
+            prev = True
+        return prev, next, systemSettings[start:end]

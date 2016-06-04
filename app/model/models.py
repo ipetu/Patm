@@ -51,6 +51,7 @@ class UserModel(Document):
         'indexes': [{'fields': ['userName'], 'unique': True}]
     }
 
+
 class AcountLogsModel(Document):
     """
     用户登录日志
@@ -65,6 +66,7 @@ class AcountLogsModel(Document):
         'collection': 'AccountLogModel',
         'indexes': [{'fields': ['alogCtms']}]
     }
+
 
 class PostsModel(Document):
     """
@@ -84,3 +86,16 @@ class PostsModel(Document):
 
 class VideoPostsModel(PostsModel):
     pass
+
+
+class SystemSettingModel(Document):
+    """
+    系统设置
+    """
+    systemSettingName = StringField(required=True, unique=True)
+    systemSettingValue = StringField()
+    settingCtms = DateTimeField(default=datetime.datetime.now, required=True)
+    meta = {
+        'collection': 'SystemSettingModel',
+        'indexes': [{'fields': ['systemSettingName']}]
+    }
