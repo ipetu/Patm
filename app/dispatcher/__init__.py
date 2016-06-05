@@ -147,21 +147,37 @@ class AcountLogsModelDispatcher(object):
 系统相关的设置操作
 """
 class SystemSettingModelDispatcher(object):
-    @staticmethod
-    def saveSetting(settingName='', settingValue=''):
+
+    def __init__(self, *args, **kwargs):
+        super(self.__class__, self).__init__(*args, **kwargs)
+        self.findWithAllSystemSetting()
+
+    def findWithAllSystemSetting(self):
         """
-        保存系统设置
-        :param settingName:
-        :param settingValue:
+        查询数据库中全部的系统设置,并把它缓存到内存中
         :return:
         """
-        systemSetting = SystemSettingModel()
-        systemSetting.systemSettingName = settingName
-        systemSetting.systemSettingValue = settingValue
-        return systemSetting.save()
+        self._cache = {}
+        ret = SystemSettingModel.objects
+        if ret:
+            for row in ret:
+                self._cache[row['systemSettingName']] = row['systemSettingValue']
 
-    @staticmethod
-    def updateSetting(settingName='', settingValue=''):
+    def obtain(self,name):
+        """
+        检测这个key是否在缓存中,如果不在缓存中,则去db中查询
+        :param name:
+        :return:
+        """
+        if name not in self._cache:
+            ret = SystemSettingModel.objects.first()
+            if ret:
+                self._cache[name] = ret['systemSettingValue']
+            else:
+                self._cache[name] = None
+        return self._cache[name]
+
+    def updateSetting(self,settingName='', settingValue=''):
         """
         更新系统设置
         :param settingName:
@@ -173,6 +189,12 @@ class SystemSettingModelDispatcher(object):
             setting.systemSettingValue = settingValue
             return setting.save()
         return False
+
+    def deleteWithSystemSettingName(self,systemSettingName):
+        singleSystemSetting = SystemSettingModel.objects(systemSettingName=systemSettingName).first()
+        if singleSystemSetting is not None:
+            singleSystemSetting.delete()
+        self._cache[systemSettingName] = None
 
     @staticmethod
     def findWithSystemSettingPager(start=0, end=5, order='-settingCtms', limit=10):
@@ -192,3 +214,16 @@ class SystemSettingModelDispatcher(object):
         if start != 0:
             prev = True
         return prev, next, systemSettings[start:end]
+
+    @staticmethod
+    def saveSetting(settingName='', settingValue=''):
+        """
+        保存系统设置
+        :param settingName:
+        :param settingValue:
+        :return:
+        """
+        systemSetting = SystemSettingModel()
+        systemSetting.systemSettingName = settingName
+        systemSetting.systemSettingValue = settingValue
+        return systemSetting.save()

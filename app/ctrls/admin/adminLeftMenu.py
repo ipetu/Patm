@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 # Created by Liuwf on 16/6/2
 from app.ctrls.admin import AdminCtrl, admin
-from app.dispatcher import AcountLogsModelDispatcher,SystemSettingModelDispatcher
+from app.dispatcher import AcountLogsModelDispatcher, SystemSettingModelDispatcher, UserModelDispatcher
 
 """
 系统登录日志
@@ -65,6 +65,8 @@ class Admin_SettingCtrl(AdminCtrl):
 """
 增加系统设置
 """
+
+
 class Admin_SettingCreateCtrl(AdminCtrl):
     @admin
     def get(self, *args):
@@ -83,3 +85,18 @@ class Admin_SettingCreateCtrl(AdminCtrl):
             :return:
             """
         self.render('admin/setting_create.html')
+
+
+class Admin_SettingDeleteCtrl(AdminCtrl):
+    @admin
+    def post(self, *args, **kwargs):
+        try:
+            systemSettingName = self.input('systemSettingName')
+            conf_vals = self.get_runtime_conf(systemSettingName)
+            SystemSettingModelDispatcher().deleteWithSystemSettingName(systemSettingName=systemSettingName)
+            userName = self.current_user.userName
+            userModel = UserModelDispatcher.findWithUsername(username=userName)
+            self.ualog(userModel, "删除配置：" + systemSettingName, conf_vals)
+            self.flash(1, {'msg': '删除配置成功'})
+        except Exception ,e:
+            self.flash(0)

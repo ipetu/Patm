@@ -8,7 +8,7 @@ import importlib
 
 import tornado
 
-from app.dispatcher import AccountModelDispatcher, AcountLogsModelDispatcher
+from app.dispatcher import AccountModelDispatcher, AcountLogsModelDispatcher, SystemSettingModelDispatcher
 
 try:
     import urlparse  # py2
@@ -53,7 +53,7 @@ class BasicCtrl(tornado.web.RequestHandler):
         return super(BasicCtrl, self).write_error(*[status_code], **kwargs)
 
     def get_runtime_conf(self, name):
-        return self.datum('confs').obtain(name)
+        return SystemSettingModelDispatcher().obtain(name)
 
     def get_current_user(self):
         usid = self.get_cookie("_usid")
@@ -95,6 +95,7 @@ class BasicCtrl(tornado.web.RequestHandler):
         return tornado.escape
 
     def param_xsrfs(self):
+        print 'xsrf='+self.get_escaper().url_escape(self.xsrf_token)
         return '_xsrf=' + self.get_escaper().url_escape(self.xsrf_token)
 
     def human_valid(self):

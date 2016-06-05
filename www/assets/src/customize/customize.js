@@ -265,7 +265,7 @@ L.widget.display.locate = function(opts)
     var dial = $('.dial[data-id="dial' + args.uqid + '"]');
     if (!dial.size()) {
         var html = ''
-        + '<div data-id="dial' + args.uqid + '" class="modal hide fade dial" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div data-id="dial' + args.uqid + '" class="modal modal-info modal-dialog fade dial" tabindex="-1" role="dialog" aria-hidden="true">'
         + '    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
         + '    <div class="modal-header dial-head"></div>'
         + '    <div class="modal-body dial-body"></div>'
@@ -273,7 +273,7 @@ L.widget.display.locate = function(opts)
         + '</div>'
         + '';
 
-        $('body').append(html);
+        $('.content-header').append(html);
         dial = $(dial.selector);
     }
 
@@ -321,6 +321,7 @@ L.widget.display.render = function(opts)
     dial.find('.dial-foot').html(args.foot);
     args.foot == '' ? dial.find('.dial-foot').hide() : dial.find('.dial-foot').show();
 
+    // dial.modal('show');
     if (dial.is(':hidden')) {
         dial.modal('show');
     }
