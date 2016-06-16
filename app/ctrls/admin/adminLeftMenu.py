@@ -61,6 +61,21 @@ class Admin_SettingCtrl(AdminCtrl):
         self.render('admin/setting.html', systemSettings=systemSettings, prev=prev, next=next, accountPage=accountPage,
                     pageCount=pageCount, currentPager=int(currentPager))
 
+class Admin_SettingEditCtrl(AdminCtrl):
+    @admin
+    def get(self, *args):
+        """
+        系统设置修改
+
+        :param args:
+        :return:
+        """
+        editSetting = self.get_argument('edit', default='', strip=True)
+        editSettingModel = SystemSettingModelDispatcher.findWithSettingName(editSetting)
+        if not editSettingModel:
+            self.flash(0, {'sta': 404})
+            return
+        self.render('admin/setting_edit.html',editSettingModel=editSettingModel)
 
 """
 增加系统设置

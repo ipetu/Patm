@@ -45,9 +45,9 @@
                             <td>{{ item.systemSettingValue}}</td>
                             <td>{{ item.settingCtms.strftime('%Y-%m-%d %H:%M:%S') }}</td>
                             <td>
-                                <a href="/admin/setting?edit={{url_escape(item.systemSettingName )}}" color="white"><span class="label label-success">编辑</span></a>
+                                <a href="/admin/setting_edit?edit={{url_escape(item.systemSettingName )}}" color="white"><span class="label label-success">编辑</span></a>
                                 <!--<a href="/admin/setting?remove={{item.systemSettingName}}" color="white"><span class="label label-success">删除</span></a>-->
-                                <a href="javascript:;" onclick="L.method.confirm() && L.method.operate('post', '/admin/setting/delete?systemSettingName={{ url_escape(item.systemSettingName)}}', '{{ handler.param_xsrfs() }}')" color="white"><span class="label label-success">删除</span></a>
+                                <a href="javascript:;" onclick="L.method.confirm() && L.method.operate('post', '/admin/setting_delete?systemSettingName={{ url_escape(item.systemSettingName)}}', '{{ handler.param_xsrfs() }}')" color="white"><span class="label label-success">删除</span></a>
                             </td>
                         </tr>
                         {% end %}

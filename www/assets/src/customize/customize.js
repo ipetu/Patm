@@ -206,9 +206,9 @@ L.method.respond = function(opts, resp)
     } else {
         if (args.forward) {
             if (resp.url) {
-                msgs.push('继续操作，请 <a href="' + resp.url + '">点击这里</a>');
+                msgs.push('继续操作，请 <a  href="' + resp.url + '">点击这里</a>');
             } else {
-                msgs.push('继续操作，请 <a href="javascript:location.reload()">刷新当前页</a> 或 <a href="javascript:history.go(-1)">返回上一页</a>');
+                msgs.push('继续操作，请 <a  href="javascript:location.reload()">刷新当前页</a> 或 <a  href="javascript:history.go(-1)">返回上一页</a>');
             }
         }
 
@@ -265,15 +265,17 @@ L.widget.display.locate = function(opts)
     var dial = $('.dial[data-id="dial' + args.uqid + '"]');
     if (!dial.size()) {
         var html = ''
-        + '<div data-id="dial' + args.uqid + '" class="modal modal-info modal-dialog fade dial" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '<div data-id="dial' + args.uqid + '" class="modal modal-success  fade dial" tabindex="-1" role="dialog" aria-hidden="true">'
+        + '  <div  class="modal-dialog" >'
         + '    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>'
         + '    <div class="modal-header dial-head"></div>'
         + '    <div class="modal-body dial-body"></div>'
         + '    <div class="modal-footer dial-foot"></div>'
+        + ' </div>'
         + '</div>'
         + '';
 
-        $('.content-header').append(html);
+        $('.content').append(html);
         dial = $(dial.selector);
     }
 

@@ -227,3 +227,12 @@ class SystemSettingModelDispatcher(object):
         systemSetting.systemSettingName = settingName
         systemSetting.systemSettingValue = settingValue
         return systemSetting.save()
+
+    @staticmethod
+    def findWithSettingName(settingName=''):
+        """
+
+        :param settingName:
+        :return:
+        """
+        return SystemSettingModel.objects(systemSettingName=settingName).first()
