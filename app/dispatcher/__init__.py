@@ -184,7 +184,7 @@ class SystemSettingModelDispatcher(object):
         :param settingValue:
         :return:
         """
-        setting = SystemSettingModel.objects(settingName=settingName).first()
+        setting = SystemSettingModel.objects(systemSettingName=settingName).first()
         if setting is not None:
             setting.systemSettingValue = settingValue
             return setting.save()

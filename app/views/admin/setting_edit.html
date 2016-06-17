@@ -15,39 +15,36 @@
 <!-- Main content -->
 <section class="content">
     <!-- 按钮触发模态框 -->
-    <button class="btn btn-primary btn-lg" data-toggle="modal"
-            data-target="#myModal">
-        开始演示模态框
-    </button>
-    {{editSettingModel.systemSettingName}}
-    <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        模态框（Modal）标题
-                    </h4>
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">编辑配置</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" class="request-ajax-form" method="post">
+            {% raw xsrf_form_html() %}
+            <div class="box-body">
+                <div class="form-group">
+                    <label>配置键</label>
+                    <input type="text" name="conf_name"  value="{{editSettingModel.systemSettingName}}"
+                           class="form-control" readonly="true">
                 </div>
-                <div class="modal-body">
-                    在这里添加一些文本
+                <div class="form-group">
+                    <label>配置值</label>
+                    <input type="text" placeholder="输入 ..." name="conf_vals"
+                           value="{{editSettingModel.systemSettingValue}}" class="form-control">
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary ">提交</button>
+                <button type="reset" class="btn btn-primary">重置</button>
+            </div>
+        </form>
     </div>
+    <!-- /.box -->
 </section>
 
 {% end body %}

@@ -76,6 +76,20 @@ class Admin_SettingEditCtrl(AdminCtrl):
             self.flash(0, {'sta': 404})
             return
         self.render('admin/setting_edit.html',editSettingModel=editSettingModel)
+    @admin
+    def post(self, *args, **kwargs):
+        try:
+            settingName = self.get_argument('conf_name', default='', strip=True)
+            settingValue = self.get_argument('conf_vals', default='', strip=True)
+            settingModel = SystemSettingModelDispatcher()
+            #todu 这里需要做判断是否修改成功
+            settingModel.updateSetting(settingName=settingName,settingValue=settingValue)
+            userName = self.current_user.userName
+            userModel = UserModelDispatcher.findWithUsername(username=userName)
+            self.ualog(userModel, "修改配置成功：" + settingName, settingValue)
+            self.flash(1,{'msg':'更新配置成功'})
+        except Exception,e:
+            self.flash(0)
 
 """
 增加系统设置
