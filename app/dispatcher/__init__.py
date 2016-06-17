@@ -248,9 +248,12 @@ class SystemSettingModelDispatcher(object):
         """
         return SystemSettingModel.objects(systemSettingName=settingName).first()
 
+
 """
 外链接相关的db操作
 """
+
+
 class LinksModelDispatcher(object):
     @staticmethod
     def saveLinks(lkAddress='', lkTitle='', lkDesc='', lkScore=''):
@@ -294,5 +297,24 @@ class LinksModelDispatcher(object):
         linkModel = LinksModel.objects(linkAddress=lkAddress).first()
         if linkModel is not None:
             linkModel.delete()
+            return True
+        return False
+
+    @staticmethod
+    def updateWithLink(lkAddress='', lkTitle='', lkDesc='', lkScore=''):
+        """
+
+        :param lkAddress:
+        :param lkTitle:
+        :param lkDesc:
+        :param lkScore:
+        :return:
+        """
+        linkModel = LinksModel.objects(linkAddress=lkAddress).first()
+        if linkModel is not None:
+            linkModel.linkDesc = lkDesc
+            linkModel.linkTitle = lkTitle
+            linkModel.linkScore = int(lkScore)
+            linkModel.save()
             return True
         return False

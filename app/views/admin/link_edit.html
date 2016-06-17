@@ -18,7 +18,7 @@
     <!-- general form elements -->
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">编辑配置</h3>
+            <h3 class="box-title">链接编辑</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
@@ -26,14 +26,24 @@
             {% raw xsrf_form_html() %}
             <div class="box-body">
                 <div class="form-group">
-                    <label>配置键</label>
-                    <input type="text" name="conf_name"  value="{{editSettingModel.systemSettingName}}"
+                    <label>链接地址</label>
+                    <input type="text" name="linkAddress" value="{{linkModel.linkAddress}}"
                            class="form-control" readonly="true">
                 </div>
                 <div class="form-group">
-                    <label>配置值</label>
-                    <input type="text" placeholder="输入 ..." name="conf_vals"
-                           value="{{editSettingModel.systemSettingValue}}" class="form-control">
+                    <label>链接标题</label>
+                    <input type="text" placeholder="输入 ..." name="linkTitle"
+                           value="{{linkModel.linkTitle}}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>链接描述</label>
+                    <input type="text" placeholder="输入 ..." name="linkDesc"
+                           value="{{linkModel.linkDesc}}" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>链接分值</label>
+                    <input type="number" placeholder="输入 ..." name="linkScore"
+                           value="{{linkModel.linkScore}}" class="form-control">
                 </div>
             </div>
             <!-- /.box-body -->

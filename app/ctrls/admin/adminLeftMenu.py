@@ -235,15 +235,16 @@ class Admin_LinkDeleteCtrl(AdminCtrl):
         try:
             linkAddress = self.input('linkAddress')
             result = LinksModelDispatcher.deleteWithLinkAddressName(lkAddress=linkAddress)
-            if result :
+            if result:
                 userName = self.current_user.userName
                 userModel = UserModelDispatcher.findWithUsername(username=userName)
                 self.ualog(userModel, "删除链接：" + linkAddress, linkAddress)
                 self.flash(1, {'msg': '删除链接成功'})
             else:
-                self.flash(0,{'msg':'删除失败'})
+                self.flash(0, {'msg': '删除失败'})
         except:
             self.flash(0)
+
 
 class Admin_LinkEditCtrl(AdminCtrl):
     @admin
@@ -254,24 +255,27 @@ class Admin_LinkEditCtrl(AdminCtrl):
         :param args:
         :return:
         """
-        editSetting = self.get_argument('edit', default='', strip=True)
-        editSettingModel = SystemSettingModelDispatcher.findWithSettingName(editSetting)
-        if not editSettingModel:
+        linkAddress = self.get_argument('edit', default='', strip=True)
+        linkModel = LinksModelDispatcher.findWithLinkAddress(lkAddress=linkAddress)
+        if not linkModel:
             self.flash(0, {'sta': 404})
             return
-        self.render('admin/link_edit.html', editSettingModel=editSettingModel)
+        self.render('admin/link_edit.html', linkModel=linkModel)
 
     @admin
     def post(self, *args, **kwargs):
         try:
-            settingName = self.get_argument('conf_name', default='', strip=True)
-            settingValue = self.get_argument('conf_vals', default='', strip=True)
-            settingModel = SystemSettingModelDispatcher()
-            # todu 这里需要做判断是否修改成功
-            settingModel.updateSetting(settingName=settingName, settingValue=settingValue)
-            userName = self.current_user.userName
-            userModel = UserModelDispatcher.findWithUsername(username=userName)
-            self.ualog(userModel, "修改配置成功：" + settingName, settingValue)
-            self.flash(1, {'msg': '更新配置成功'})
+            linkAddress = self.get_argument('linkAddress', default='', strip=True)
+            linkTitle = self.get_argument('linkTitle', default='', strip=True)
+            linkDesc = self.get_argument('linkDesc', default='', strip=True)
+            linkScore = self.get_argument('linkScore', default='', strip=True)
+            result = LinksModelDispatcher.updateWithLink(lkAddress=linkAddress, lkScore=linkScore, lkTitle=linkTitle,lkDesc=linkDesc)
+            if result:
+                userName = self.current_user.userName
+                userModel = UserModelDispatcher.findWithUsername(username=userName)
+                self.ualog(userModel, "修改链接地址成功：" + linkAddress, linkDesc)
+                self.flash(1, {'msg': '修改链接地址成功'})
+                return
+            self.flash(0, {'msg': '链接地址不存在'})
         except:
             self.flash(0)
