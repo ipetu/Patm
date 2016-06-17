@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+
+{% block title %}Dashboard{% end %}
+
+{% block body %}
+<section class="content-header">
+    <h1>
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">新增链接</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" class="request-ajax-form" method="post">
+            {% raw xsrf_form_html() %}
+            <div class="box-body">
+                <div class="form-group">
+                    <label>链接地址</label>
+                    <input type="text" placeholder="Enter ..." name="link_address" class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label>链接标题</label>
+                    <input  type="text" placeholder="Enter ..." name="link_title"  class="form-control" required/>
+                </div>
+                <div class="form-group">
+                    <label>链接描述</label>
+                    <input  type="text" placeholder="Enter ..." name="link_desc"  class="form-control" required/>
+                </div>
+                 <div class="form-group">
+                    <label>链接分值</label>
+                    <input  type="number" placeholder="Enter ..." name="link_score"  class="form-control" required/>
+                     <span class="help-inline">分值大于等于 99 的链接会在首页展示</span>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary ">提交</button>
+            </div>
+        </form>
+    </div>
+    <!-- /.box -->
+</section>
+
+{% end body %}
+

@@ -99,3 +99,17 @@ class SystemSettingModel(Document):
         'collection': 'SystemSettingModel',
         'indexes': [{'fields': ['systemSettingName']}]
     }
+
+
+class LinksModel(Document):
+    """
+    友情链接
+    """
+    linkAddress = StringField(required=True, unique=True)
+    linkTitle = StringField()
+    linkDesc = StringField()
+    linkScore = IntField()
+    linkCreate = DateTimeField(default=datetime.datetime.now, required=True)
+    meta = {
+        'collection': 'LinksModel'
+    }

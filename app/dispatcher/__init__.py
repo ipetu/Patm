@@ -1,11 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 # Created by Liuwf on 16/5/29
-from app.model.models import (AccountModel, UserModel, AcountLogsModel, PostsModel, VideoPostsModel, SystemSettingModel)
+from app.model.models import (AccountModel, UserModel, AcountLogsModel, PostsModel, VideoPostsModel, SystemSettingModel,
+                              LinksModel)
 
 """
 账号信息操作类
 """
+
+
 class AccountModelDispatcher(object):
     @staticmethod
     def saveAccountInfo(userName, userSalt, userPassword, userMobile=''):
@@ -44,9 +47,12 @@ class AccountModelDispatcher(object):
         from bson import ObjectId
         return AccountModel.objects(id=ObjectId(id)).first()
 
+
 """
 个人信息操作类
 """
+
+
 class UserModelDispatcher(object):
     @staticmethod
     def saveUserInfo(userName, userNick, userAvatar, userSign='', userMail='', userMeta='', userStatus=1):
@@ -109,9 +115,12 @@ class UserModelDispatcher(object):
     def updateWithUserName(username):
         pass
 
+
 """
 账号登录日志操作
 """
+
+
 class AcountLogsModelDispatcher(object):
     @staticmethod
     def saveLog(username, user, text, userIp, userData=''):
@@ -143,11 +152,13 @@ class AcountLogsModelDispatcher(object):
             prev = True
         return prev, next, accountLogs[start:end]
 
+
 """
 系统相关的设置操作
 """
-class SystemSettingModelDispatcher(object):
 
+
+class SystemSettingModelDispatcher(object):
     def __init__(self, *args, **kwargs):
         super(self.__class__, self).__init__(*args, **kwargs)
         self.findWithAllSystemSetting()
@@ -163,7 +174,7 @@ class SystemSettingModelDispatcher(object):
             for row in ret:
                 self._cache[row['systemSettingName']] = row['systemSettingValue']
 
-    def obtain(self,name):
+    def obtain(self, name):
         """
         检测这个key是否在缓存中,如果不在缓存中,则去db中查询
         :param name:
@@ -177,7 +188,7 @@ class SystemSettingModelDispatcher(object):
                 self._cache[name] = None
         return self._cache[name]
 
-    def updateSetting(self,settingName='', settingValue=''):
+    def updateSetting(self, settingName='', settingValue=''):
         """
         更新系统设置
         :param settingName:
@@ -190,7 +201,7 @@ class SystemSettingModelDispatcher(object):
             return setting.save()
         return False
 
-    def deleteWithSystemSettingName(self,systemSettingName):
+    def deleteWithSystemSettingName(self, systemSettingName):
         singleSystemSetting = SystemSettingModel.objects(systemSettingName=systemSettingName).first()
         if singleSystemSetting is not None:
             singleSystemSetting.delete()
@@ -236,3 +247,52 @@ class SystemSettingModelDispatcher(object):
         :return:
         """
         return SystemSettingModel.objects(systemSettingName=settingName).first()
+
+"""
+外链接相关的db操作
+"""
+class LinksModelDispatcher(object):
+    @staticmethod
+    def saveLinks(lkAddress='', lkTitle='', lkDesc='', lkScore=''):
+        """
+        保存外链接
+        :param lkAddress:
+        :param lkTitle:
+        :param lkDesc:
+        :param lkScore:
+        :return:
+        """
+        linkModel = LinksModel()
+        linkModel.linkAddress = lkAddress
+        linkModel.linkTitle = lkTitle
+        linkModel.linkDesc = lkDesc
+        linkModel.linkScore = lkScore
+        return linkModel.save()
+
+    @staticmethod
+    def findWithLinkAddress(lkAddress=''):
+        """
+
+        :param lkAddress:
+        :return:
+        """
+        return LinksModel.objects(linkAddress=lkAddress).first()
+
+    @staticmethod
+    def findWithLinkPager(start=0, end=5, order='-linkCreate', limit=10):
+        size = end - start
+        prev = next = False
+        linkModels = LinksModel.objects.order_by(order)[start:end + 1]
+        if len(linkModels) - size > 0:
+            next = True
+        if start != 0:
+            prev = True
+        return prev, next, linkModels[start:end]
+
+    @staticmethod
+    def deleteWithLinkAddressName(lkAddress=''):
+        linkModel = LinksModel.objects(linkAddress=lkAddress).first()
+        if linkModel is not None:
+            linkModel.delete()
+            return True
+        return False
