@@ -40,13 +40,6 @@ class Admin_SettingCtrl(AdminCtrl):
         :param args:
         :return:
         """
-        # SystemSettingModelDispatcher.saveSetting(settingName='descp',settingValue='descp')
-        # SystemSettingModelDispatcher.saveSetting(settingName='keyws',settingValue='keyws')
-        # SystemSettingModelDispatcher.saveSetting(settingName='title',settingValue='title')
-        # SystemSettingModelDispatcher.saveSetting(settingName='topic',settingValue='topic')
-        # SystemSettingModelDispatcher.saveSetting(settingName='brand',settingValue='brand')
-        # SystemSettingModelDispatcher.saveSetting(settingName='built',settingValue='built')
-        # SystemSettingModelDispatcher.saveSetting(settingName='power',settingValue='power')
         pageSize = 5
         currentPager = self.get_argument('currentPage', default=0, strip=True)
         start = 0
@@ -88,7 +81,7 @@ class Admin_SettingEditCtrl(AdminCtrl):
             userModel = UserModelDispatcher.findWithUsername(username=userName)
             self.ualog(userModel, "修改配置成功：" + settingName, settingValue)
             self.flash(1,{'msg':'更新配置成功'})
-        except Exception,e:
+        except :
             self.flash(0)
 
 """
@@ -113,7 +106,23 @@ class Admin_SettingCreateCtrl(AdminCtrl):
             :param args:
             :return:
             """
-        self.render('admin/setting_create.html')
+        try:
+            settingName = self.get_argument('conf_name', default='', strip=True)
+            settingValue = self.get_argument('conf_vals', default='', strip=True)
+            if len(settingName) >32:
+                self.flash(0,{'msg':'配置键长度不能超过32个字符'})
+                return
+            settingModel = SystemSettingModelDispatcher.findWithSettingName(settingName=settingName)
+            if settingModel is not  None:
+                self.flash(0,{'msg':'配置键已存在'})
+                return
+            SystemSettingModelDispatcher.saveSetting(settingName=settingName,settingValue=settingValue)
+            userName = self.current_user.userName
+            userModel = UserModelDispatcher.findWithUsername(username=userName)
+            self.ualog(userModel, "增加配置成功：" + settingName, settingValue)
+            self.flash(1, {'msg': '增加配置成功'})
+        except:
+            self.flash(0)
 
 
 class Admin_SettingDeleteCtrl(AdminCtrl):
@@ -127,5 +136,29 @@ class Admin_SettingDeleteCtrl(AdminCtrl):
             userModel = UserModelDispatcher.findWithUsername(username=userName)
             self.ualog(userModel, "删除配置：" + systemSettingName, conf_vals)
             self.flash(1, {'msg': '删除配置成功'})
-        except Exception ,e:
+        except:
             self.flash(0)
+"""
+链接管理
+"""
+class Admin_LinkCtrl(AdminCtrl):
+    @admin
+    def get(self, *args):
+        """
+
+        :param args:
+        :return:
+        """
+        pageSize = 10
+        currentPager = self.get_argument('currentPage', default=0, strip=True)
+        start = 0
+        if currentPager is not 0:
+            start = (int(currentPager) - 1) * pageSize
+        end = start + pageSize
+        prev, next, accountLogs = AcountLogsModelDispatcher.findWithAccountLogPager(start=start, end=end)
+        accountPage = accountLogs.count()
+        pageCount = accountPage / pageSize
+        if accountPage % pageSize > 0:
+            pageCount = pageCount + 1
+        self.render('admin/link.html', accountLogs=accountLogs, prev=prev, next=next, accountPage=accountPage,
+                    pageCount=pageCount, currentPager=int(currentPager))

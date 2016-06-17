@@ -257,43 +257,62 @@ desired effect
                 {% else %}
                 <li><a href="/admin"><i class="fa fa-link"></i> <span>Link</span></a></li>
                 {% end %}
-                {% if request.path == '/second'%}
-                <li class="active"><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                {% else %}
-                <li><a href="/second"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                {% end %}
                 {% if request.path == '/admin/alogLogin'%}
                 <li class="active"><a href="/admin/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
                 {% else %}
                 <li><a href="/admin/alogLogin"><i class="fa fa-link"></i> <span>登录日志</span></a></li>
                 {% end %}
 
+                {% if request.path == '/admin/link' or request.path == '/admin/link_create'%}
+                <li class="treeview active ">
+                    {% else %}
+                <li class="treeview ">
+                    {% end %}
+                    <a href="#"><i class="fa fa-link"></i> <span>链接管理</span><i class="fa fa-angle-left pull-right"></i></a>
+                    {% if request.path == '/admin/link' or request.path == '/admin/link_create'%}
+                    <ul class="treeview-menu  menu-open ">
+                        {% else %}
+                        <ul class="treeview-menu ">
+                            {% end %}
+                            {% if request.path == '/admin/link'%}
+                            <li class="active"><a href="/admin/link"><i class="fa fa-circle-o"></i>链接列表</a></li>
+                            {% else %}
+                            <li class=""><a href="/admin/link"><i class="fa fa-circle-o"></i>链接列表</a></li>
+                            {% end %}
+                            {% if request.path == '/admin/setting_create'%}
+                            <li class="active"><a href="/admin/link_create"><i class="fa fa-circle-o"></i>创建链接</a></li>
+                            {% else %}
+                            <li class=""><a href="/admin/link_create"><i class="fa fa-circle-o"></i>创建链接</a></li>
+                            {% end %}
+                    </ul>
+                </li>
+
                 {% if request.path == '/admin/setting' or request.path == '/admin/setting_create'%}
                 <li class="treeview active ">
-                {% else %}
+                    {% else %}
                 <li class="treeview ">
-                {% end %}
-                 <a href="#"><i class="fa fa-link"></i> <span>设置</span><i class="fa fa-angle-left pull-right"></i></a>
+                    {% end %}
+                    <a href="#"><i class="fa fa-link"></i> <span>设置</span><i
+                            class="fa fa-angle-left pull-right"></i></a>
                     {% if request.path == '/admin/setting' or request.path == '/admin/setting_create'%}
                     <ul class="treeview-menu  menu-open ">
-                    {% else %}
-                    <ul class="treeview-menu ">
-                    {% end %}
-                    {% if request.path == '/admin/setting'%}
-                    <li class="active"><a href="/admin/setting"><i class="fa fa-circle-o"></i>系统设置</a></li>
-                    {% else %}
-                    <li class=""><a href="/admin/setting"><i class="fa fa-circle-o"></i>系统设置</a></li>
-                    {% end %}
-                    {% if request.path == '/setting_create'%}
-                    <li class="active"><a href="/admin/setting_create"><i class="fa fa-circle-o"></i>新建设置</a></li>
-                    {% else %}
-                    <li class=""><a href="/admin/setting_create"><i class="fa fa-circle-o"></i>新建设置</a></li>
-                    {% end %}
-                     </ul>
-                     </ul>
-                 </li>
-            </ul>
-                    <!-- /.sidebar-menu -->
+                        {% else %}
+                        <ul class="treeview-menu ">
+                            {% end %}
+                            {% if request.path == '/admin/setting'%}
+                            <li class="active"><a href="/admin/setting"><i class="fa fa-circle-o"></i>系统设置</a></li>
+                            {% else %}
+                            <li class=""><a href="/admin/setting"><i class="fa fa-circle-o"></i>系统设置</a></li>
+                            {% end %}
+                            {% if request.path == '/admin/setting_create'%}
+                            <li class="active"><a href="/admin/setting_create"><i class="fa fa-circle-o"></i>新建设置</a>
+                            </li>
+                            {% else %}
+                            <li class=""><a href="/admin/setting_create"><i class="fa fa-circle-o"></i>新建设置</a></li>
+                            {% end %}
+                        </ul>
+                        </li>
+                        <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
     </aside>

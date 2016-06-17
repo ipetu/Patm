@@ -15,39 +15,34 @@
 <!-- Main content -->
 <section class="content">
     <!-- 按钮触发模态框 -->
-    <button class="btn btn-primary btn-lg" data-toggle="modal"
-            data-target="#myModal">
-        开始演示模态框
-    </button>
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">新增配置</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <form role="form" class="request-ajax-form" method="post">
+            {% raw xsrf_form_html() %}
+            <div class="box-body">
+                <div class="form-group">
+                    <label>配置键</label>
+                    <input type="text" placeholder="Enter ..." name="conf_name" class="form-control" required/>
+                    <span class="help-inline">请勿使用特殊字符，长度不要超过64个字符</span>
+                </div>
+                <div class="form-group">
+                    <label>配置值</label>
+                    <input  type="text" placeholder="Enter ..." name="conf_vals"  class="form-control" required/>
+                </div>
+            </div>
+            <!-- /.box-body -->
 
-    <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close"
-                            data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                        模态框（Modal）标题
-                    </h4>
-                </div>
-                <div class="modal-body">
-                    在这里添加一些文本
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">关闭
-                    </button>
-                    <button type="button" class="btn btn-primary">
-                        提交更改
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary ">提交</button>
+            </div>
+        </form>
     </div>
+    <!-- /.box -->
 </section>
 
 {% end body %}
